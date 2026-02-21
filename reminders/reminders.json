@@ -1,0 +1,44 @@
+{
+  "timezone": "America/New_York",
+  "defaultRecipient": "matt1999brown@gmail.com",
+  "windowsMinutes": 6,
+  "slots": [
+    {
+      "id": "morning",
+      "label": "5:00 AM Check-in",
+      "time24h": "05:00",
+      "subject": "Morning check-in",
+      "lines": [
+        "Minimum wins today:",
+        "- Bible audio on commute (10 min or 1 chapter)",
+        "- 10 minutes movement (or 20 if you have it)",
+        "- 15 minutes intentional time with Jasmine (no phone)",
+        "",
+        "Today’s focus depends on the day:",
+        "Mon: Sculpt night",
+        "Tue: Family worship night",
+        "Wed: Meeting night",
+        "Thu: Creative review then letter writing",
+        "Fri: Date night",
+        "Sat: Field service then artist date",
+        "Sun: Meeting then optional music flow",
+        "",
+        "Quick prompt: What would make today feel successful?"
+      ]
+    },
+    {
+      "id": "evening",
+      "label": "9:15 PM Journal + Close",
+      "time24h": "21:15",
+      "subject": "Evening journal",
+      "lines": [
+        "2-minute journal:",
+        "1) What did I do that I’m proud of today?",
+        "2) Where did I show love as a husband?",
+        "3) Spiritual win today?",
+        "4) Creative win today (3D, music, or coding)?",
+        "5) What’s one thing I’ll do tomorrow?"
+      ]
+    }
+  ]
+}
