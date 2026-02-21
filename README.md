@@ -1,50 +1,49 @@
-# Welcome to your Expo app 👋
+# Life Tracker (Expo + SQLite)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+V1 iPhone-focused life tracking app built with Expo Router and `expo-sqlite`.
 
-## Get started
+## V1 features
 
-1. Install dependencies
+- Bottom tabs: **Today**, **Week**, **Habits**, **Journal**, **Projects (3D)**, **Settings**.
+- SQLite tables:
+  - `Pillars`
+  - `Habits`
+  - `RecurringEvents`
+  - `HabitCompletions`
+  - `JournalEntries`
+  - `Projects3D`
+  - `PrintLogs`
+- Seeded defaults:
+  - Pillars: Spiritual, Marriage, Health, 3D, Music
+  - Weekly anchors and creative blocks
+- Grace Mode streak rule:
+  - 1 miss allowed
+  - streak breaks after 2 consecutive misses
+- Settings are stored locally only (email + reminder times).
+- No push notifications and no email reminders in V1.
+
+## Run locally
+
+1. Install dependencies:
 
    ```bash
    npm install
    ```
 
-2. Start the app
+2. Start Expo:
 
    ```bash
-   npx expo start
+   npm run start
    ```
 
-In the output, you'll find options to open the app in a
+3. Open in Expo Go:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   - Scan QR code from terminal
+   - Ensure phone and computer are on the same network
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Helpful scripts
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- `npm run ios` – open iOS simulator (if available)
+- `npm run android` – open Android emulator/device
+- `npm run web` – open web preview
+- `npm run lint` – run Expo lint checks
