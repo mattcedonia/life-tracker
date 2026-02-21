@@ -1,33 +1,64 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from 'expo-router';
-import React from 'react';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { theme } from '@/lib/theme';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
+        tabBarStyle: {
+          height: 78,
+          paddingTop: 10,
+          paddingBottom: 18,
+          backgroundColor: theme.bg,
+          borderTopColor: theme.border,
+        },
+        tabBarActiveTintColor: theme.accent,
+        tabBarInactiveTintColor: theme.muted,
+        tabBarLabelStyle: { fontSize: 11, fontWeight: '700' },
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Today',
+          tabBarIcon: ({ color: iconColor, size }) => <Ionicons name="today-outline" color={iconColor} size={size} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="week"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Week',
+          tabBarIcon: ({ color: iconColor, size }) => <Ionicons name="calendar-outline" color={iconColor} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="habits"
+        options={{
+          title: 'Habits',
+          tabBarIcon: ({ color: iconColor, size }) => <Ionicons name="repeat-outline" color={iconColor} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="journal"
+        options={{
+          title: 'Journal',
+          tabBarIcon: ({ color: iconColor, size }) => <Ionicons name="book-outline" color={iconColor} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="projects"
+        options={{
+          title: '3D Projects',
+          tabBarIcon: ({ color: iconColor, size }) => <Ionicons name="cube-outline" color={iconColor} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: 'Settings',
+          tabBarIcon: ({ color: iconColor, size }) => <Ionicons name="settings-outline" color={iconColor} size={size} />,
         }}
       />
     </Tabs>
