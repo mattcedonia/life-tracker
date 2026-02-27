@@ -1,98 +1,133 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+
+const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const DAY_FOCUS: Record<string, string> = {
+  Sunday: 'Meeting → optional music flow',
+  Monday: 'Sculpt night',
+  Tuesday: 'Family worship night',
+  Wednesday: 'Meeting night',
+  Thursday: 'Creative review → letter writing',
+  Friday: 'Date night',
+  Saturday: 'Field service → artist date',
+};
+
+const MORNING_WINS = [
+  'Bible audio on commute (10 min or 1 chapter)',
+  '10 minutes movement (or 20 if you have it)',
+  '15 minutes intentional time with Jasmine (no phone)',
+];
+
+const EVENING_QUESTIONS = [
+  "What did I do that I'm proud of today?",
+  'Where did I show love as a husband?',
+  'Spiritual win today?',
+  'Creative win today (3D, music, or coding)?',
+  "What's one thing I'll do tomorrow?",
+];
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const colorScheme = useColorScheme() ?? 'light';
+  const insets = useSafeAreaInsets();
+  const now = new Date();
+  const dayName = DAYS[now.getDay()];
+  const dateStr = `${MONTHS[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+  const todayFocus = DAY_FOCUS[dayName];
+  const tint = Colors[colorScheme].tint;
+  const isDark = colorScheme === 'dark';
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
+  return (
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + 24 }]}>
+      <View
+        style={[
+          styles.header,
+          { paddingTop: insets.top + 16, backgroundColor: isDark ? '#1D3D47' : '#0a7ea4' },
+        ]}>
+        <ThemedText type="title" style={styles.headerTitle}>
+          Life Tracker
+        </ThemedText>
+        <ThemedText style={styles.headerDate}>
+          {dayName}, {dateStr}
+        </ThemedText>
+      </View>
+
+      <ThemedView style={[styles.card, styles.focusCard, { borderLeftColor: tint }]}>
+        <ThemedText type="subtitle">Today's Focus</ThemedText>
+        <ThemedText style={styles.focusText}>{todayFocus}</ThemedText>
+      </ThemedView>
+
+      <ThemedView style={styles.card}>
+        <ThemedText type="subtitle">☀️ Morning Minimums · 5:00 AM</ThemedText>
+        {MORNING_WINS.map((win, i) => (
+          <ThemedText key={i} style={styles.listItem}>
+            · {win}
+          </ThemedText>
+        ))}
+        <ThemedText style={[styles.prompt, { color: tint }]}>
+          What would make today feel successful?
         </ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
+
+      <ThemedView style={styles.card}>
+        <ThemedText type="subtitle">🌙 Evening Journal · 9:15 PM</ThemedText>
+        {EVENING_QUESTIONS.map((q, i) => (
+          <ThemedText key={i} style={styles.listItem}>
+            {i + 1}. {q}
+          </ThemedText>
+        ))}
       </ThemedView>
-    </ParallaxScrollView>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  container: {
+    flex: 1,
+  },
+  content: {
+    gap: 16,
+  },
+  header: {
+    paddingBottom: 28,
+    paddingHorizontal: 20,
+    gap: 4,
+  },
+  headerTitle: {
+    color: '#fff',
+  },
+  headerDate: {
+    color: '#ffffffcc',
+    fontSize: 15,
+  },
+  card: {
+    marginHorizontal: 16,
+    padding: 16,
+    borderRadius: 12,
     gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  focusCard: {
+    borderLeftWidth: 4,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  focusText: {
+    fontSize: 16,
+    fontStyle: 'italic',
+  },
+  listItem: {
+    fontSize: 14,
+    lineHeight: 22,
+  },
+  prompt: {
+    marginTop: 4,
+    fontSize: 14,
+    fontStyle: 'italic',
   },
 });

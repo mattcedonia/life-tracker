@@ -1,7 +1,7 @@
 {
   "timezone": "America/New_York",
   "defaultRecipient": "matt1999brown@gmail.com",
-  "windowsMinutes": 6,
+  "windowsMinutes": 2,
   "slots": [
     {
       "id": "morning",
